@@ -1,0 +1,67 @@
+package com.example.api_gateway.filters;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+
+import com.example.api_gateway.constatns.PublicEndpoints;
+import com.example.api_gateway.exception.GatewayException;
+import com.example.api_gateway.util.HeaderUtil;
+import com.example.api_gateway.util.JwtUtil;
+
+import reactor.core.publisher.Mono;
+
+@Component
+@Order(2)
+public class JwtValidationFilter implements GlobalFilter {
+
+	@Autowired
+	private JwtUtil jwtUtil;
+
+	@Autowired
+	private HeaderUtil headerUtil;
+
+	@Override
+//	chain parameter is responsible  for forwarding the request to next filters or to the service
+	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		String path = exchange.getRequest().getURI().getPath();
+
+		if (isPublicEndpoint(path)) {
+//			skip jwt validation
+			// "JWT validation is complete. Please continue executing the remaining filters
+			// and forward the request."
+			return chain.filter(exchange);
+		} else {
+			String authorizationHeader = exchange.getRequest().getHeaders().getFirst("Authorization");
+
+			if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+				throw new GatewayException("AUTH_HEADER_MISSING","Authorization header is missing or invalid");
+			} else {
+				String token = authorizationHeader.substring(7);
+
+				jwtUtil.validateToken(token);
+
+				String role = jwtUtil.extractRole(token);
+				String userName = jwtUtil.extractUserName(token);
+				Map<String, Object> claims = jwtUtil.extractAllclaims(token);
+				ServerWebExchange modifiedExchange = headerUtil.addHeaders(exchange, userName, role, claims);
+
+				return chain.filter(modifiedExchange);
+			}
+
+		}
+
+		
+
+	}
+
+	private boolean isPublicEndpoint(String path) {
+		return PublicEndpoints.publicUrls.contains(path);
+
+	}
+}

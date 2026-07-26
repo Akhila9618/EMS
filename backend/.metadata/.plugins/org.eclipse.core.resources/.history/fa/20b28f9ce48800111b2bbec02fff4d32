@@ -1,0 +1,6 @@
+package com.example.api_gateway.exception;
+
+@ErrorWebExceptionHandler
+public class GatewayExceptions extends RuntimeException {
+
+}

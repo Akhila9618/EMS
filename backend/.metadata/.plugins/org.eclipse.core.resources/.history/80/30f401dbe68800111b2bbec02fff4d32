@@ -1,0 +1,15 @@
+package com.example.api_gateway.exception;
+
+
+public class GatewayExceptions extends RuntimeException {
+	private String errorcode;
+	public GatewayExceptions(String errorCode, String errorMessage) {
+		super(errorMessage);
+		this.errorcode = errorCode;
+		
+	}
+	
+	if(exception instanceof GatewayExceptions) {
+		
+	}
+}

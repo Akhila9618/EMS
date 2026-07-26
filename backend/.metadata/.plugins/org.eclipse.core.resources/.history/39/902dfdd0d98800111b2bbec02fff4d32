@@ -1,0 +1,17 @@
+package com.example.api_gateway.filters;
+
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.web.server.ServerWebExchange;
+
+import reactor.core.publisher.Mono;
+
+public class JwtValidationFilter implements GlobalFilter {
+
+	@Override
+//	chain parameter is reponsible for forwarding the request to next filters or to the service
+	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain){
+		String path = exchange.getRequest().getURI().getPath();
+		
+	}
+}

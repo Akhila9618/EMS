@@ -1,0 +1,63 @@
+package com.example.api_gateway.filters;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.web.server.ServerWebExchange;
+
+import com.example.api_gateway.constatns.PublicEndpoints;
+import com.example.api_gateway.util.JwtUtil;
+
+import io.jsonwebtoken.lang.Collections;
+import reactor.core.publisher.Mono;
+
+public class JwtValidationFilter implements GlobalFilter {
+	
+	@Autowired
+	private JwtUtil jwtUtil;
+	
+
+	@Override
+//	chain parameter is responsible  for forwarding the request to next filters or to the service
+	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain){
+		String path = exchange.getRequest().getURI().getPath();
+		
+		if(isPublicEndpoint(path)) {
+//			skip jwt validation
+			//"JWT validation is complete. Please continue executing the remaining filters and forward the request."
+			return chain.filter(exchange);
+		} else {
+			String authorizationHeader = exchange.getRequest().getHeaders().getFirst("Authorization");
+			if(!authorizationHeader.isEmpty()) {
+				if(authorizationHeader.startsWith("Bearer ")) {
+					String token = authorizationHeader.substring(7);
+					
+					Boolean isTokenValid = jwtUtil.validateToken(token);
+					if(isTokenValid) {
+						String role = jwtUtil.extractRole();
+						Map<String,String> claims = jwtUtil.extractclaims();
+						
+					}
+				} else {
+					throw new UnauthorizedException;
+				}
+			}
+			
+		}
+		
+		
+	}
+
+	private boolean isPublicEndpoint(String path) {
+		final PublicEndpoints publicEndpoints = new PublicEndpoints();
+		List<String> publicUrls = publicEndpoints.publicUrls;
+		if(publicUrls.contains(path)) {
+			return true ;
+		}
+		
+		return false;
+	}
+}

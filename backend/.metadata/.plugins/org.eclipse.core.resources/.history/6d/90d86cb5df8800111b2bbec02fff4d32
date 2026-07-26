@@ -1,0 +1,15 @@
+package com.example.api_gateway.util;
+
+import java.util.Map;
+
+import org.springframework.web.server.ServerWebExchange;
+
+public class HeaderUtil {
+
+	public ServerWebExchange addHeaders(ServerWebExchange exchange, String userName, String role,
+			Map<String, Object> claims) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

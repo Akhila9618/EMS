@@ -1,0 +1,46 @@
+package com.example.api_gateway.filters;
+
+import java.time.LocalDateTime;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+
+import reactor.core.publisher.Mono;
+
+@Component
+@Order(3)
+public class ResponseLoginFilter implements GlobalFilter {
+	private static final Logger logger = LoggerFactory.getLogger(ResponseLoginFilter.class);
+
+	@Override
+	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain){
+		long startTime = System.currentTimeMillis();
+		return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+			long endTime = System.currentTimeMillis();
+			 logger.info("------------------------------------");
+             logger.info("Response sent");
+             logger.info("Path : {}",
+                     exchange.getRequest().getURI().getPath());
+
+             logger.info("Method : {}",
+                     exchange.getRequest().getMethod());
+
+             logger.info("Status Code : {}",
+                     exchange.getResponse().getStatusCode());
+
+             logger.info("Response Time : {} ms",
+                     (endTime - startTime));
+
+             logger.info("Time : {}",
+                     LocalDateTime.now());
+
+             logger.info("------------------------------------");
+		}));
+	}
+
+}

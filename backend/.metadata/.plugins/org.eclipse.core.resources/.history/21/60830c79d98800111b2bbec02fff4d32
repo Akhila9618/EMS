@@ -1,0 +1,11 @@
+package com.example.api_gateway.filters;
+
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+
+public class JwtValidationFilter implements GlobalFilter {
+
+	@Override
+	public Mono<void> filter(ServerWebExcahnge exchange){
+		String path = exhagne.getRequest().getURI().getPath();
+	}
+}

@@ -1,0 +1,19 @@
+package com.example.api_gateway.exception;
+
+public class GatewayException extends RuntimeException {
+
+	private static final long serialVersionUID = 2340944849928897245L;
+	private String errorCode;
+	private String errorMessage;
+	public GatewayException(String errorCode, String errorMessage) {
+		super(errorMessage);
+		this.errorCode = errorCode;
+		this.errorMessage = errorMessage;
+	}
+	 public String getErrorCode(){
+	        return errorCode;
+	    }
+	 public String getErrorMessage() {
+		 return errorMessage;
+	 }
+}
