@@ -1,0 +1,18 @@
+package com.example.api_gateway.config;
+
+import java.lang.System.Logger;
+
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class GatewayConfig {
+	
+//	this containsthe thing that to get executed for every request
+	
+	private static final Logger logger = LoggerFactory.getLogger(GatewayConfig.class);
+	
+		
+	}
+
+}

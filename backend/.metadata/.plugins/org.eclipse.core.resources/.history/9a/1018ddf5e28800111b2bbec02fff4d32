@@ -1,0 +1,57 @@
+package com.example.api_gateway.util;
+
+import java.security.Key;
+import java.util.Date;
+import java.util.Map;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+
+@Component
+public class JwtUtil {
+	@Value("${secretKey}")
+	private String secretKey;
+
+	private SecretKey getSigningKey() {
+		return Keys.hmacShaKeyFor(secretKey.getBytes());
+	}
+
+	public void validateToken(String token) {
+		try {
+			Claims claims = extractAllclaims(token);
+			if(claims.getExpiration().before(new Date())) {
+				 throw new JwtExpiredException(
+	                        "JWT Token has expired");
+			}
+
+		} catch (JwtExpiredException e) {
+			thorw e;
+		} catch (JwtException e) {
+			throw new InvalidTokenException("Invalid JWT Token");
+		}
+
+	}
+
+	public Claims extractAllclaims(String token) {
+
+		return Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload();
+	}
+
+
+	public String extractRole(String token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String extractUserName(String token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

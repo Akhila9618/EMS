@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflus:
+          globalcors:
+            add-to-simple-url-handler-mapping: true
+            cors-configuration:
+              '[/**]':
+                allowedOrigins: "http://localhost:5173"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                  - PATCH
+
+                allowedHeaders:
+                  - "*"
+
+                exposedHeaders:
+                  - Authorization
+                allowedCedentials: true 
+          routes:
+            - id: authservice
+              uri: http://localhost:8081
+              predicates:
+              - Paths: /auth/**
+              
+            - id: employeeservice
+              uri: http://localhost:8082
+              predicates:
+              - Paths: /employee/**
+                
+            - id: graphql
+              uri: http://localhost:8083
+              predicates:
+              - Paths: /graphql/** 
+            
+            - id: reportservice
+              uri: http://localhost:8084
+              predicates:
+              - Paths: /reports/**   
+                    

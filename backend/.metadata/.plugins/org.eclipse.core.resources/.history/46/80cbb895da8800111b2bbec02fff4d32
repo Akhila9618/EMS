@@ -1,0 +1,38 @@
+package com.example.api_gateway.filters;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.web.server.ServerWebExchange;
+
+import com.example.api_gateway.constatns.PublicEndpoints;
+
+import io.jsonwebtoken.lang.Collections;
+import reactor.core.publisher.Mono;
+
+public class JwtValidationFilter implements GlobalFilter {
+
+	@Override
+//	chain parameter is reponsible for forwarding the request to next filters or to the service
+	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain){
+		String path = exchange.getRequest().getURI().getPath();
+		
+		if(isPublicEndpoint(path)) {
+			
+		}
+		
+		//"JWT validation is complete. Please continue executing the remaining filters and forward the request."
+		return chain.filter(exchange);
+		
+	}
+
+	private boolean isPublicEndpoint(String path) {
+		final PublicEndpoints publicEndpoints = new PublicEndpoints();
+		List<String> publicUrls = publicEndpoints.publicUrls;
+		
+		
+		return false;
+	}
+}

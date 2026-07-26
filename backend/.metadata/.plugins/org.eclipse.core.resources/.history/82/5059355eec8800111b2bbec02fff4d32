@@ -1,0 +1,75 @@
+package com.example.api_gateway.exception;
+
+import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+
+import com.example.api_gateway.dto.response.ApiResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import reactor.core.publisher.Mono;
+
+@Component
+public class GatewayExceptions implements ErrorWebExceptionHandler {
+	private final ObjectMapper objectMapper = new ObjectMapper();
+	private String errorCode;
+
+	public GatewayExceptions(String errorCode, String errorMessage) {
+
+		super(errorMessage);
+		this.errorCode = errorCode;
+	}
+
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	@Override
+	public Mono<Void> handle(ServerWebExchange exchange, Throwable exception) {
+		ApiResponse<Object> response = new ApiReponse<>();
+		HttpStatus httpStatus;
+
+		if (exception instanceof GatewayExceptions) {
+			GatewayExceptions gatewayException = (GatewayExceptions) exception;
+
+			switch (gatewayException.getErrorCode()) {
+
+			case "JWT_EXPIRED":
+
+				httpStatus = HttpStatus.UNAUTHORIZED;
+				break;
+
+			case "TOKEN_INVALID":
+
+				httpStatus = HttpStatus.UNAUTHORIZED;
+				break;
+
+			case "AUTH_HEADER_MISSING":
+
+				httpStatus = HttpStatus.UNAUTHORIZED;
+				break;
+
+			default:
+
+				httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+			
+			response.setStatusCode(httpStatus.value());
+			response.setStatus("failed");
+			response.setMessage(gatewayException.getMessage());
+			response.setData(null);
+		}
+
+	}
+
+	private String getMessage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private int getErrorCode() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}

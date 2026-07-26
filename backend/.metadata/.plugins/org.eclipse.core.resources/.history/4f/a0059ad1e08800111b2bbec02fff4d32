@@ -1,0 +1,30 @@
+package com.example.api_gateway.util;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+
+public class JwtUtil {
+	@Value("${secretKey}")
+	private String secretKey; 
+
+	public void validateToken(String token) {
+		
+	}
+
+	public Map<String, Object> extractclaims(String token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String extractRole(String token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String extractUserName(String token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,22 @@
+server:
+  port: 8084  
+    
+spring:
+  application:
+    name: reportservice
+
+  datasource:
+    # 1. Connection settings
+    url: jdbc:mysql://localhost:3306/ems
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver  
+      # 2. Hibernate structural engine settings
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true    

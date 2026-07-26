@@ -1,0 +1,22 @@
+package com.example.api_gateway.config;
+
+//@Configuration
+public class CorsConfig {
+
+//	@Bean
+//	public CorsWebFilter corsWebFilter() {
+//
+//		CorsConfiguration configuration = new CorsConfiguration();
+//
+//		configuration.addAllowedOrigin("http://localhost:5173");
+//		configuration.addAllowedMethod("*");
+//		configuration.addAllowedHeader("*");
+//		configuration.setAllowCredentials(true);
+//
+//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//
+//		source.registerCorsConfiguration("/**", configuration);
+//
+//		return new CorsWebFilter(source);
+//	}
+}
