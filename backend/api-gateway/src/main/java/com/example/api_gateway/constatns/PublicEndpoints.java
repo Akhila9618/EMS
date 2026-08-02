@@ -4,6 +4,6 @@ import java.util.List;
 
 public class PublicEndpoints {
 
-	public static final List<String> publicUrls = List.of("/auth.login/", "/auth/forgot-password",
+	public static final List<String> publicUrls = List.of("/auth/login", "/auth/forgot-password","/auth/generate-token",
 			"/auth/reset-password", "/swagger-ui", "/v3/api-docs");
 }

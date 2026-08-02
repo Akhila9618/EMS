@@ -20,3 +20,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        
+secretKey: secretKeyForPasswordBCryotEncoding   
+tokenExpiryTime : 60000
+
+jwt:
+   access-expiration: 900000
+   refresh-expiration: 604800000
+        

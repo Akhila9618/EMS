@@ -22,6 +22,7 @@ public class RequestLoginFilter implements GlobalFilter {
 //	this gets executed for every received request
 	@Override   // this overrider is compulsory
 	public Mono<Void> filter(ServerWebExchange exchange , GatewayFilterChain chain) {
+		System.out.println("logging");
 		
 			logger.info("----------------------");
 			logger.info("Request received");

@@ -19,6 +19,7 @@ public class ResponseLoginFilter implements GlobalFilter {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain){
+		System.out.println("response");
 		long startTime = System.currentTimeMillis();
 		return chain.filter(exchange).then(Mono.fromRunnable(() -> {
 			long endTime = System.currentTimeMillis();

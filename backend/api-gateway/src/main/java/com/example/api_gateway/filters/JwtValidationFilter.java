@@ -29,6 +29,7 @@ public class JwtValidationFilter implements GlobalFilter {
 	@Override
 //	chain parameter is responsible  for forwarding the request to next filters or to the service
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		System.out.println("jwt");
 		String path = exchange.getRequest().getURI().getPath();
 
 		if (isPublicEndpoint(path)) {

@@ -194,3 +194,4 @@ mail.properties
 *.tmp
 *.swp
 *.lock
+/.metadata/
