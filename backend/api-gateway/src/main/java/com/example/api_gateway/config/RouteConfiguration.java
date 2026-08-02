@@ -11,7 +11,7 @@ public class RouteConfiguration {
 	@Bean
 	public RouteLocator routes(RouteLocatorBuilder builder) {
 		return builder.routes()
-		.route("auth", r -> r.path("/auth").uri("http://localhost:8081"))
+		.route("auth", r -> r.path("/auth/**").uri("http://localhost:8081"))
 		.route("employee", r -> r.path("/employee").uri("http://localhost:8082"))
 		.route("graphql", r -> r.path("/graphql").uri("http://localhost:8083"))
 		.route("reports", r -> r.path("/reports").uri("http://localhost:8084"))

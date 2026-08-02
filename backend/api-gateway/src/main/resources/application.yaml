@@ -46,5 +46,10 @@ spring:
 #              predicates:
 #              - Paths: /reports/**   
                
-secretKey: mysecretkey                
-                    
+secretKey: secretKeyForPasswordBCryotEncoding                
+
+logging:
+  level:
+    org:
+      springframework: 
+        security: DEBUG                    

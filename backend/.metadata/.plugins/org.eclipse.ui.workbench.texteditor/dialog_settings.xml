@@ -10,8 +10,13 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="extractAllclaims"/>
+		<item key="selection" value="getUserPassowrd"/>
 		<list key="findhistory">
+			<item value="getUserPassowrd"/>
+			<item value="echo"/>
+			<item value="spring-boot-starter-web"/>
+			<item value="ObjectMapper"/>
+			<item value="IOException"/>
 			<item value="extractAllclaims"/>
 			<item value="&#x09;private Claims extractAllclaims(String token) {"/>
 			<item value="parserBuilder"/>
