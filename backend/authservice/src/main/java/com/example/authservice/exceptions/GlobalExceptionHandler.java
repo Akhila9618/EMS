@@ -1,6 +1,5 @@
 package com.example.authservice.exceptions;
 
-import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +7,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -145,16 +147,16 @@ public class GlobalExceptionHandler {
 	/*
 	 * 11. Authentication Failure
 	 */
-//@ExceptionHandler(BadCredentialsException.class)
-//public ResponseEntity<ApiResponse<String>> handleBadCredentialsException(BadCredentialsException ex) {
-//
-//	ApiResponse<String> response = new ApiResponse<>();
-//	response.setStatus("failed");
-//	response.setMessage("Invalid username or password.");
-//	response.setData(null);
-//
-//	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-//}
+	@ExceptionHandler(BadCredentialsException.class)
+	public ResponseEntity<ApiResponse<String>> handleBadCredentialsException(BadCredentialsException ex) {
+
+		ApiResponse<String> response = new ApiResponse<>();
+		response.setStatus("failed");
+		response.setMessage("Invalid username or password.");
+		response.setData(null);
+
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+	}
 
 	/*
 	 * 12. Unsupported HTTP Method
@@ -197,6 +199,29 @@ public class GlobalExceptionHandler {
 		response.setData(null);
 
 		return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(response);
+	}
+
+//	username not found exception
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public ResponseEntity<ApiResponse<String>> handleUsernameNotFoundException(UsernameNotFoundException ex) {
+
+		ApiResponse<String> response = new ApiResponse<>();
+		response.setStatus("failed");
+		response.setMessage(ex.getMessage());
+		response.setStatusCode(HttpStatus.NOT_FOUND.value());
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+	}
+
+	@ExceptionHandler(IllegalStateException.class)
+	public ResponseEntity<ApiResponse<String>> handleIllegalStateException(IllegalStateException ex) {
+
+		ApiResponse<String> response = new ApiResponse<>();
+		response.setStatus("failed");
+		response.setMessage(ex.getMessage());
+		response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 	}
 
 	/*

@@ -21,6 +21,9 @@ public class RefreshToken {
 	private String token;
 	private Instant expiryDate;
 	private boolean revoked;
+	// if @ManyToOne got missed then during table creation this user column with
+	// class type User id treated to map to one of the existing data types which
+	// causes error
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	private User user;
