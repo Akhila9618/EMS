@@ -20,6 +20,21 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  mail:
+    host : smtp.gmail.com
+    port : 587
+    username : akhilatavva15@gmail.com
+    password : eqed mekh bqhx asdq
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+      
+            
         
 secretKey: secretKeyForPasswordBCryotEncoding   
 tokenExpiryTime : 60000
@@ -27,4 +42,6 @@ tokenExpiryTime : 60000
 jwt:
    access-expiration: 900000
    refresh-expiration: 604800000
+   
+uiHostUrl: http://localhost:5173/   
         
